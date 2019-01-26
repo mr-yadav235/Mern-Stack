@@ -9,14 +9,23 @@ import registerServiceWorker from './registerServiceWorker';
 import Edit from './components/Edit';
 import Create from './components/Create';
 import Show from './components/Show';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+
+
 
 ReactDOM.render(
   <Router>
       <div>
-        <Route exact path='/' component={App} />
+        <Route exact path='/' component={Home} />
+        <Route exact path='/app' component={App} />
         <Route path='/edit/:id' component={Edit} />
         <Route path='/create' component={Create} />
         <Route path='/show/:id' component={Show} />
+        <Route path='/login' component={Login} />
+        <Route path='/register' component={Register} />
+
       </div>
   </Router>,
   document.getElementById('root')

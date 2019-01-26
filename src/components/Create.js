@@ -26,6 +26,7 @@ class Create extends Component {
     e.preventDefault();
 
     const { isbn, title, author, description, published_year, publisher } = this.state;
+    console.log(this.state);
 
     axios.post('/api/book', { isbn, title, author, description, published_year, publisher })
       .then((result) => {
@@ -64,7 +65,7 @@ class Create extends Component {
               </div>
               <div class="form-group">
                 <label for="published_date">Published Date:</label>
-                <input type="number" class="form-control" name="published_year" value={published_year} onChange={this.onChange} placeholder="Published Year" />
+                <input type="date" class="form-control" name="published_year" value={published_year} onChange={this.onChange} placeholder="Published Year" />
               </div>
               <div class="form-group">
                 <label for="publisher">Publisher:</label>
