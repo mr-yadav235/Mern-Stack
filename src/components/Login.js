@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './Login.css';
+
 
 class Login extends Component {
 
@@ -26,40 +28,39 @@ class Login extends Component {
     axios.post('/api/user/authenticate', { name, password })
         .then((result) => {
             localStorage.setItem('jwtToken', result.data.token);
-        this.props.history.push("/app")
-      }).
-      catch((error) => {
-        if(error.response.status === 401) {
+            localStorage.setItem('name', result.data.name);
+            if(result.data.success==true){
+              this.setState({ message: '' });
+              this.props.history.push("/app");
+            }
+        else {
           this.setState({ message: 'Login failed. Username or password not match' });
+          this.props.history.push("/");
+
         }
       });
   }
 
   render() {
-    const { name, password } = this.state;
+    const { name, password, message } = this.state;
     return (
       <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              Login
-            </h3>
-          </div>
-          <div class="panel-body">
-            <h4><Link to="/register"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Register</Link></h4>
-            <form onSubmit={this.onSubmit}>
-              <div class="form-group">
-                <label for="isbn">Name:</label>
-                <input type="text" class="form-control" name="name" value={name} onChange={this.onChange} placeholder="NAME" />
-              </div>
-              <div class="form-group">
-                <label for="title">Password:</label>
-                <input type="password" class="form-control" name="password" value={password} onChange={this.onChange} placeholder="PASSWORD" />
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-          </div>
-        </div>
+        <form class="form-signin" onSubmit={this.onSubmit}>
+          {message !== '' &&
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              { message }
+            </div>
+          }
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="text" class="form-control" placeholder="Email address" name="name" value={name} onChange={this.onChange} required/>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" class="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required/>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+          <p>
+            Not a member? <Link to="/register"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Register here</Link>
+          </p>
+        </form>
       </div>
     );
   }

@@ -8,21 +8,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      user:[]
     };
+
   }
 
   componentDidMount() {
+    this.state.user = localStorage.getItem('name');
     axios.get('/api/book')
       .then(res => {
         this.setState({ books: res.data });
         console.log(this.state.books);
       });
+
+
   }
 
   render() {
     return (
       <div class="container">
+      <div class="col-md-6 col-md-offset-3">
+    <h1>Hi {this.state.user}!</h1>
+    <p>You're logged in with the MERN Stack & React !!</p>
+   
+    <p><a>Logout</a></p>
+</div>
+<br></br>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">

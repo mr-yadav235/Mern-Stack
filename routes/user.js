@@ -40,6 +40,7 @@ router.post('/register', function(req, res, next) {
   
           // return the information including token as JSON
           res.json({
+            name: req.body.name,
             success: true,
             message: 'Enjoy your token!',
             token: token
